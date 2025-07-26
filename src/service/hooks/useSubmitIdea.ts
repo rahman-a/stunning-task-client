@@ -1,9 +1,9 @@
 import { useMutation } from '@tanstack/react-query'
-import { websiteApi, SubmitIdeaRequest } from '../api/website'
+import { ideasApi, SubmitIdeaRequest } from '../api/ideas'
 
 export const useSubmitIdea = () => {
   return useMutation({
-    mutationFn: (data: SubmitIdeaRequest) => websiteApi.submitIdea(data),
+    mutationFn: (data: SubmitIdeaRequest) => ideasApi.submitIdea(data),
     onError: (error) => {
       console.error('Failed to submit idea:', error)
     },

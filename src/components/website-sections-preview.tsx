@@ -13,7 +13,10 @@ import { Button } from '@/components/ui/button'
 import { useSections } from '@/service'
 
 interface WebsiteSectionsPreviewProps {
-  idea: string
+  idea: {
+    id: string
+    description: string
+  }
   onRetry?: () => void
 }
 
@@ -21,7 +24,7 @@ export function WebsiteSectionsPreview({
   idea,
   onRetry,
 }: WebsiteSectionsPreviewProps) {
-  const { data, isLoading, error, refetch, isError } = useSections(idea)
+  const { data, isLoading, error, refetch, isError } = useSections(idea.id)
 
   const handleRetry = () => {
     refetch()
@@ -88,7 +91,7 @@ export function WebsiteSectionsPreview({
       <CardHeader>
         <CardTitle>Website Sections Preview</CardTitle>
         <CardDescription>
-          Generated sections for: "{idea}"
+          Generated sections for: "{idea.description}"
           {metadata && (
             <span className='block text-xs text-muted-foreground mt-1'>
               Generated at {new Date(metadata.generatedAt).toLocaleString()} •{' '}

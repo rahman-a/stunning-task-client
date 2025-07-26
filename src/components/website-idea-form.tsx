@@ -26,7 +26,10 @@ import { WebsiteSectionsPreview } from './website-sections-preview'
 import { useSubmitIdea } from '@/service'
 
 export function WebsiteIdeaForm() {
-  const [submittedIdea, setSubmittedIdea] = useState<string>('')
+  const [submittedIdea, setSubmittedIdea] = useState<{
+    id: string
+    description: string
+  }>()
 
   const form = useForm<WebsiteIdeaFormData>({
     resolver: zodResolver(websiteIdeaSchema),
@@ -41,7 +44,7 @@ export function WebsiteIdeaForm() {
     try {
       const result = await submitIdeaMutation.mutateAsync({ idea: data.idea })
       if (result.success) {
-        setSubmittedIdea(data.idea)
+        setSubmittedIdea(result.data.idea)
         form.reset()
       }
     } catch (error) {

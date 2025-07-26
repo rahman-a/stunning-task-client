@@ -10,8 +10,10 @@ export interface SubmitIdeaResponse {
   success: boolean
   message: string
   data: {
-    id: string
-    idea: string
+    idea: {
+      id: string
+      description: string
+    }
     submittedAt: string
   }
 }
@@ -27,24 +29,19 @@ export interface SectionsResponse {
 }
 
 // API service functions
-export const websiteApi = {
+export const ideasApi = {
   // Submit website idea
   submitIdea: async (data: SubmitIdeaRequest): Promise<SubmitIdeaResponse> => {
-    const response = await apiClient.post<SubmitIdeaResponse>(
-      '/website-idea',
-      data
-    )
+    const response = await apiClient.post<SubmitIdeaResponse>('/sections', data)
+    console.log('response: ', response.data)
     return response.data
   },
 
   // Fetch website sections
   getSections: async (idea: string): Promise<SectionsResponse> => {
-    const response = await apiClient.get<SectionsResponse>(
-      `/website-sections`,
-      {
-        params: { idea },
-      }
-    )
+    const response = await apiClient.get<SectionsResponse>(`/sections`, {
+      params: { ideaId: idea },
+    })
     return response.data
   },
 }
